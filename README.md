@@ -132,7 +132,7 @@ git remote add origin https://github.com/ryanbekabe/Aplikasi_Panggil_Antrian_Web
 git push -u origin main
 
 git add ..
-git commit -m "Commit 6 - Panggilan pakai suara 3 halaman terpisah"
+git commit -m "Commit 7 - Panggilan pakai suara 3 halaman terpisah. Oke."
 git push 
 
 ## Lisensi

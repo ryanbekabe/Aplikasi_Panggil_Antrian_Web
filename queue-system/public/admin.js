@@ -52,6 +52,10 @@ socket.on('queueUpdate', (data) => {
   currentNumberEl.classList.remove('flash');
   void currentNumberEl.offsetWidth; // trigger reflow
   currentNumberEl.classList.add('flash');
+  // Bell hanya untuk admin
+  if (data.action === 'panggil' && data.current && data.loket) {
+    audioDingDong.play();
+  }
   // Tampilkan info loket jika ada
   let loketInfo = document.getElementById('loketInfo');
   if (!loketInfo) {
@@ -94,7 +98,6 @@ socket.on('queueUpdate', (data) => {
   // Bell dan suara hanya jika event action adalah 'panggil'
   if (data.action === 'panggil' && data.current && data.loket) {
     audioDingDong.play();
-    speakQueueNumber(data.current, data.loket);
   }
   // ...existing code...
 });

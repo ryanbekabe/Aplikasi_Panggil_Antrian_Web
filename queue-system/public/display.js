@@ -13,6 +13,18 @@ function updateCallLogDisplay() {
     '</ul>';
 }
 
+function speakQueueNumber(nomor, loket) {
+  let text = `Nomor antrian ${nomor}, silakan menuju loket ${loket}`;
+  const utter = new window.SpeechSynthesisUtterance(text);
+  const voices = window.speechSynthesis.getVoices();
+  const indoVoice = voices.find(v => v.lang.startsWith('id'));
+  if (indoVoice) utter.voice = indoVoice;
+  utter.rate = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+let lastCurrentNumber = null;
+
 socket.on('queueUpdate', (data) => {
   currentNumberEl.textContent = data.current;
   latestNumberEl.textContent = data.latest;
@@ -27,4 +39,9 @@ socket.on('queueUpdate', (data) => {
     if (callLog.length > 5) callLog = callLog.slice(0, 5);
     updateCallLogDisplay();
   }
+  // Suara panggilan hanya di display
+  if (data.action === 'panggil' && data.current && data.loket && lastCurrentNumber !== data.current) {
+    speakQueueNumber(data.current, data.loket);
+  }
+  lastCurrentNumber = data.current;
 });
