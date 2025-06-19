@@ -92,6 +92,24 @@ h1 {
   display: none;
 }
 
+.flash {
+  animation: flash-bg 0.6s;
+}
+
+@keyframes flash-bg {
+  0% { background: #ffe066; }
+  50% { background: #fff; }
+  100% { background: #ffe066; }
+}
+
+.loket-info {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  color: #007bff;
+  font-weight: bold;
+  text-align: center;
+}
+
 @media print {
   body * {
     visibility: hidden;

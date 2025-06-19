@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Data antrian
 let queueNumber = 0;
 let currentNumber = 0;
+let loketMap = {}; // { nomorAntrian: nomorLoket }
 
 // Socket.IO connection
 io.on('connection', (socket) => {
@@ -24,15 +25,16 @@ io.on('connection', (socket) => {
   // Ambil nomor antrian baru
   socket.on('getQueueNumber', () => {
     queueNumber++;
-    io.emit('queueUpdate', { current: currentNumber, latest: queueNumber });
+    io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] });
     return queueNumber;
   });
   
-  // Panggil nomor berikutnya
-  socket.on('callNext', () => {
+  // Panggil nomor berikutnya dengan loket tujuan
+  socket.on('callNext', (loket) => {
     if (currentNumber < queueNumber) {
       currentNumber++;
-      io.emit('queueUpdate', { current: currentNumber, latest: queueNumber });
+      loketMap[currentNumber] = loket;
+      io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket });
     }
   });
   

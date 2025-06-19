@@ -131,8 +131,8 @@ git branch -M main
 git remote add origin https://github.com/ryanbekabe/Aplikasi_Panggil_Antrian_Web.git
 git push -u origin main
 
-git add .
-git commit -m "Commit 2 - Bisa Cetak"
+git add ..
+git commit -m "Commit 3 - Bunyi dan pemilihan loket tujuan"
 git push 
 
 ## Lisensi
