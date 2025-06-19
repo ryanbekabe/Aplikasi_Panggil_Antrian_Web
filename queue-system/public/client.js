@@ -22,3 +22,31 @@ getNumberBtn.addEventListener('click', () => {
     userNumberEl.textContent = data.latest;
   });
 });
+
+// Fungsi cetak nomor antrian
+const printBtn = document.getElementById('printNumber');
+if (printBtn) {
+  printBtn.addEventListener('click', () => {
+    const printWindow = window.open('', '', 'width=300,height=200');
+    const nomor = userNumberEl.textContent;
+    printWindow.document.write(`
+      <html>
+      <head>
+        <title>Cetak Nomor Antrian</title>
+        <style>
+          body { margin: 0; padding: 0; text-align: center; }
+          .number {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+          }
+        </style>
+      </head>
+      <body onload="window.print();window.close()">
+        <div class="number">${nomor}</div>
+      </body>
+      </html>
+    `);
+    printWindow.document.close();
+  });
+}

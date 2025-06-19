@@ -132,7 +132,7 @@ git remote add origin https://github.com/ryanbekabe/Aplikasi_Panggil_Antrian_Web
 git push -u origin main
 
 git add .
-git commit -m "Commit 1 - Generate Nomer Antrian"
+git commit -m "Commit 2 - Bisa Cetak"
 git push 
 
 ## Lisensi
