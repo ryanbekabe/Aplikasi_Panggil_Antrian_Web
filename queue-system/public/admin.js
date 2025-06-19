@@ -28,6 +28,23 @@ callNextBtn.addEventListener('click', () => {
   socket.emit('callNext', Number(loket));
 });
 
+// Log panggilan terakhir
+let callLog = [];
+
+function updateCallLogDisplay() {
+  let logDiv = document.getElementById('callLog');
+  if (!logDiv) {
+    logDiv = document.createElement('div');
+    logDiv.id = 'callLog';
+    logDiv.className = 'call-log';
+    currentNumberEl.parentNode.appendChild(logDiv);
+  }
+  logDiv.innerHTML = '<h3>5 Panggilan Terakhir</h3>' +
+    '<ul>' +
+    callLog.map(item => `<li>Nomor ${item.nomor} - Loket ${item.loket}</li>`).join('') +
+    '</ul>';
+}
+
 // Tampilkan info loket tujuan
 socket.on('queueUpdate', (data) => {
   currentNumberEl.textContent = data.current;
@@ -50,5 +67,14 @@ socket.on('queueUpdate', (data) => {
     loketInfo.textContent = `Menuju Loket ${data.loket}`;
   } else {
     loketInfo.textContent = '';
+  }
+  // Tambahkan ke log hanya jika ada nomor dipanggil (bukan saat ambil antrian baru)
+  if (
+    data.current && data.loket &&
+    (callLog.length === 0 || callLog[0].nomor !== data.current)
+  ) {
+    callLog.unshift({ nomor: data.current, loket: data.loket });
+    if (callLog.length > 5) callLog = callLog.slice(0, 5);
+    updateCallLogDisplay();
   }
 });

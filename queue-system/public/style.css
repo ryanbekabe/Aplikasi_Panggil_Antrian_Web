@@ -110,6 +110,32 @@ h1 {
   text-align: center;
 }
 
+.call-log {
+  margin-top: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 0 4px #ddd;
+}
+
+.call-log h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.call-log ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.call-log li {
+  font-size: 1rem;
+  padding: 0.2rem 0;
+  color: #444;
+}
+
 @media print {
   body * {
     visibility: hidden;

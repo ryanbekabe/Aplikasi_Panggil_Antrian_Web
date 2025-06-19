@@ -7,10 +7,20 @@ const getNumberBtn = document.getElementById('getNumber');
 const yourNumberDiv = document.getElementById('yourNumber');
 const userNumberEl = document.getElementById('userNumber');
 
+// Tambahkan suara bell jika nomor antrian user dipanggil
+const audioDingDong = new Audio('https://cdn.freesound.org/previews/331/331567_1585910-lq.mp3');
+let lastCurrentNumber = null;
+
 // Update informasi antrian
 socket.on('queueUpdate', (data) => {
   currentNumberEl.textContent = data.current;
   latestNumberEl.textContent = data.latest;
+  // Jika userNumber muncul dan sama dengan currentNumber, mainkan bell
+  const userNumber = userNumberEl ? Number(userNumberEl.textContent) : null;
+  if (userNumber && data.current === userNumber && lastCurrentNumber !== data.current) {
+    audioDingDong.play();
+  }
+  lastCurrentNumber = data.current;
 });
 
 // Ambil nomor antrian baru

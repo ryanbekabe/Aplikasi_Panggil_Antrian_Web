@@ -132,7 +132,7 @@ git remote add origin https://github.com/ryanbekabe/Aplikasi_Panggil_Antrian_Web
 git push -u origin main
 
 git add ..
-git commit -m "Commit 3 - Bunyi dan pemilihan loket tujuan"
+git commit -m "Commit 4 - Log 5 loket panggilan terakhir"
 git push 
 
 ## Lisensi

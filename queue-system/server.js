@@ -20,12 +20,12 @@ io.on('connection', (socket) => {
   console.log('User connected');
   
   // Kirim data antrian terbaru ke client yang baru terhubung
-  socket.emit('queueUpdate', { current: currentNumber, latest: queueNumber });
+  socket.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null });
   
   // Ambil nomor antrian baru
   socket.on('getQueueNumber', () => {
     queueNumber++;
-    io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] });
+    io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null });
     return queueNumber;
   });
   
