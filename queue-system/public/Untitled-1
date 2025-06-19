@@ -1,0 +1,10 @@
+queue-system/
+  server.js
+  package.json
+  public/
+    index.html
+    admin.html
+    client.js
+    admin.js
+    style.css
+README.md

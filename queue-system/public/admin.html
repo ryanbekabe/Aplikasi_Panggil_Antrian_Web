@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Sistem Antrian</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container admin">
+    <h1>Admin Sistem Antrian</h1>
+    
+    <div class="queue-info">
+      <div class="queue-box">
+        <h2>Nomor Antrian Saat Ini</h2>
+        <div id="currentNumber" class="number">0</div>
+      </div>
+      
+      <div class="queue-box">
+        <h2>Nomor Antrian Terakhir</h2>
+        <div id="latestNumber" class="number">0</div>
+      </div>
+    </div>
+    
+    <div class="buttons">
+      <button id="callNext" class="btn">Panggil Nomor Berikutnya</button>
+      <a href="index.html" class="btn">Kembali ke Halaman Utama</a>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
