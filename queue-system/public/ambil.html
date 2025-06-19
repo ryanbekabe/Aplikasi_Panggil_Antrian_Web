@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ambil Nomor Antrian</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Ambil Nomor Antrian</h1>
+    <div class="queue-info">
+      <div class="queue-box">
+        <h2>Nomor Antrian Terakhir</h2>
+        <div id="latestNumber" class="number">0</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button id="getNumber" class="btn">Ambil Nomor Antrian</button>
+    </div>
+    <div id="yourNumber" class="your-number hidden">
+      <h2>Nomor Antrian Anda</h2>
+      <div id="userNumber" class="number">0</div>
+      <button id="printNumber" class="btn">Cetak</button>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

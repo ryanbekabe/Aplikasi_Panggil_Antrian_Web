@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display Antrian</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container display">
+    <h1>Display Antrian</h1>
+    <div class="queue-info">
+      <div class="queue-box">
+        <h2>Nomor Antrian Dipanggil</h2>
+        <div id="currentNumber" class="number">0</div>
+        <div id="loketInfo" class="loket-info"></div>
+      </div>
+      <div class="queue-box">
+        <h2>Nomor Antrian Terakhir</h2>
+        <div id="latestNumber" class="number">0</div>
+      </div>
+    </div>
+    <div id="callLog" class="call-log"></div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="display.js"></script>
+</body>
+</html>

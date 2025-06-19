@@ -7,53 +7,23 @@ const getNumberBtn = document.getElementById('getNumber');
 const yourNumberDiv = document.getElementById('yourNumber');
 const userNumberEl = document.getElementById('userNumber');
 
-// Tambahkan suara bell jika nomor antrian user dipanggil
-const audioDingDong = new Audio('https://cdn.freesound.org/previews/331/331567_1585910-lq.mp3');
-
-// Tambahkan script responsivevoice jika belum ada
-if (!window.responsiveVoice) {
-  const script = document.createElement('script');
-  script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=D4qHW8Rb';
-  document.head.appendChild(script);
-}
-
-// Fungsi pemanggilan suara menggunakan Web Speech API
-function speakQueueNumber(nomor, loket) {
-  let text = `Nomor antrian ${nomor}, silakan menuju loket`;
-  if (loket) text += ` ${loket}`;
-  const utter = new window.SpeechSynthesisUtterance(text);
-  // Pilih suara Bahasa Indonesia jika tersedia
-  const voices = window.speechSynthesis.getVoices();
-  const indoVoice = voices.find(v => v.lang.startsWith('id'));
-  if (indoVoice) utter.voice = indoVoice;
-  utter.rate = 1;
-  window.speechSynthesis.speak(utter);
-}
-
+// Tidak perlu bell dan suara di halaman ambil nomor
+// Hapus/matikan kode bell dan suara di sini
 let lastCurrentNumber = null;
 
 // Update informasi antrian
 socket.on('queueUpdate', (data) => {
-  currentNumberEl.textContent = data.current;
   latestNumberEl.textContent = data.latest;
-  // Jika userNumber muncul dan sama dengan currentNumber, mainkan bell dan panggil suara
-  const userNumber = userNumberEl ? Number(userNumberEl.textContent) : null;
-  if (userNumber && data.current === userNumber && lastCurrentNumber !== data.current) {
-    // Bell
-    audioDingDong.play();
-    // Panggilan suara
-    speakQueueNumber(userNumber, data.loket);
-  }
-  lastCurrentNumber = data.current;
 });
 
 // Ambil nomor antrian baru
 getNumberBtn.addEventListener('click', () => {
   socket.emit('getQueueNumber');
-  
   socket.once('queueUpdate', (data) => {
     yourNumberDiv.classList.remove('hidden');
     userNumberEl.textContent = data.latest;
+    // Simpan nomor user jika ingin digunakan di halaman lain
+    localStorage.setItem('userNumber', data.latest);
   });
 });
 

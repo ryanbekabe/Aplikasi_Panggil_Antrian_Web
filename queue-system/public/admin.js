@@ -6,7 +6,6 @@ const latestNumberEl = document.getElementById('latestNumber');
 const callNextBtn = document.getElementById('callNext');
 
 // Update informasi antrian
-audioDingDong = new Audio('https://cdn.freesound.org/previews/331/331567_1585910-lq.mp3'); // sumber: freesound.org DINGDONG.wav
 
 // Tambahkan elemen untuk memilih loket
 document.addEventListener('DOMContentLoaded', () => {
@@ -53,8 +52,6 @@ socket.on('queueUpdate', (data) => {
   currentNumberEl.classList.remove('flash');
   void currentNumberEl.offsetWidth; // trigger reflow
   currentNumberEl.classList.add('flash');
-  // Suara notifikasi
-  audioDingDong.play();
   // Tampilkan info loket jika ada
   let loketInfo = document.getElementById('loketInfo');
   if (!loketInfo) {
@@ -77,4 +74,27 @@ socket.on('queueUpdate', (data) => {
     if (callLog.length > 5) callLog = callLog.slice(0, 5);
     updateCallLogDisplay();
   }
+});
+
+// Bell dan suara hanya untuk admin
+const audioDingDong = new Audio('https://cdn.freesound.org/previews/331/331567_1585910-lq.mp3');
+function speakQueueNumber(nomor, loket) {
+  let text = `Nomor antrian ${nomor}, silakan menuju loket ${loket}`;
+  const utter = new window.SpeechSynthesisUtterance(text);
+  const voices = window.speechSynthesis.getVoices();
+  const indoVoice = voices.find(v => v.lang.startsWith('id'));
+  if (indoVoice) utter.voice = indoVoice;
+  utter.rate = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+// Bell dan suara hanya jika event action adalah 'panggil'
+socket.on('queueUpdate', (data) => {
+  // ...existing code...
+  // Bell dan suara hanya jika event action adalah 'panggil'
+  if (data.action === 'panggil' && data.current && data.loket) {
+    audioDingDong.play();
+    speakQueueNumber(data.current, data.loket);
+  }
+  // ...existing code...
 });

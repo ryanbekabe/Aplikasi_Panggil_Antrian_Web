@@ -20,12 +20,15 @@ io.on('connection', (socket) => {
   console.log('User connected');
   
   // Kirim data antrian terbaru ke client yang baru terhubung
-  socket.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null });
+  socket.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null, action: 'init' });
   
   // Ambil nomor antrian baru
   socket.on('getQueueNumber', () => {
     queueNumber++;
-    io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null });
+    // Kirim ke client yang ambil nomor saja
+    socket.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null, action: 'ambil' });
+    // Broadcast update ke admin (atau client lain jika perlu)
+    socket.broadcast.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket: loketMap[currentNumber] || null, action: 'ambil' });
     return queueNumber;
   });
   
@@ -34,7 +37,7 @@ io.on('connection', (socket) => {
     if (currentNumber < queueNumber) {
       currentNumber++;
       loketMap[currentNumber] = loket;
-      io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket });
+      io.emit('queueUpdate', { current: currentNumber, latest: queueNumber, loket, action: 'panggil' });
     }
   });
   
